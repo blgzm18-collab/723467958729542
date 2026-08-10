@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e0e0e0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(20, 20, 35, 0.95);
+            border: 2px solid #c31a28;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(195, 26, 40, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #c31a28;
+            font-size: 24px;
+            letter-spacing: 2px;
+        }
+
+        .image-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .image-section p {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        #secret-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            border: 2px solid #c31a28;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .input-section {
+            margin-top: 30px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        #code-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(40, 40, 60, 0.8);
+            border: 2px solid #c31a28;
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        #code-input:focus {
+            outline: none;
+            background: rgba(60, 60, 80, 0.9);
+            border-color: #ff4444;
+            box-shadow: 0 0 15px rgba(195, 26, 40, 0.4);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #c31a28;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff4444;
+            box-shadow: 0 0 20px rgba(195, 26, 40, 0.6);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 13px;
+            display: none;
+        }
+
+        .message.error {
+            background: rgba(195, 26, 40, 0.3);
+            border: 1px solid #c31a28;
+            color: #ff6b6b;
+        }
+
+        .message.success {
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid #4caf50;
+            color: #81c784;
+        }
+
+        .finisher-section {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4caf50;
+            border-radius: 4px;
+        }
+
+        .finisher-section.revealed {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .finisher-code {
+            font-size: 18px;
+            font-weight: bold;
+            color: #81c784;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            user-select: all;
+        }
+
+        .copy-btn {
+            background: #4caf50;
+            font-size: 12px;
+            padding: 8px;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #66bb6a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ VERIFY ACCESS</h1>
+        
+        <div class="image-section">
+            <p>Extract the code from the image</p>
+            <img id="secret-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250'%3E%3Crect fill='%231a1a2e' width='400' height='250'/%3E%3Ctext x='50%25' y='50%25' font-size='36' fill='%23c31a28' text-anchor='middle' dominant-baseline='middle' font-family='monospace'%3EMETADATAssss: CODE-2024%3C/text%3E%3Ctext x='50%25' y='70%25' font-size='14' fill='%23666' text-anchor='middle' font-family='monospace'%3E(Check the console or image metadata)%3C/text%3E%3C/svg%3E" alt="secret">
+        </div>
+
+        <div class="input-section">
+            <label for="code-input">Enter the metadata code:</label>
+            <input type="text" id="code-input" placeholder="CODE-2024" autocomplete="off">
+            <button id="verify-btn">Verify</button>
+            
+            <div class="message" id="message"></div>
+
+            <div class="finisher-section" id="finisher-section">
+                <p style="color: #4caf50; font-weight: bold; margin-bottom: 10px;">✓ ACCESS GRANTED</p>
+                <p style="font-size: 12px; color: #888; margin-bottom: 15px;">Here is your finisher code:</p>
+                <div class="finisher-code" id="finisher-code"></div>
+                <button class="copy-btn" id="copy-btn">Copy Code</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="secret-site.js"></script>
+</body>
+</html>
